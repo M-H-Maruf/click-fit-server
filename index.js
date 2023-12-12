@@ -1,9 +1,13 @@
 const express = require('express');
 const multer = require('multer');
+const cors = require('cors');
 const path = require('path');
 
 const app = express();
 const port = process.env.PORT || 5000;
+
+// middlewares
+app.use(cors())
 
 // set up multer for file uploads
 const storage = multer.diskStorage({
@@ -23,7 +27,7 @@ app.use('/upload_images', express.static('upload_images'));
 // handling file upload
 app.post('/upload', upload.array('images'), (req, res) => {
     console.log('Upload route hit');
-    
+
     // if files are successfully uploaded, respond with a success message
     if (req.files && req.files.length > 0) {
         console.log('Files uploaded:', req.files);
